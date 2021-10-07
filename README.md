@@ -49,8 +49,8 @@ After installing node, this project will need yarn too, so just run the followin
 
 ## Install
 
-    $ git clone https://github.com/stoXmod/Node-video-stramer.git
-    $ cd Node-video-stramer
+    $ git clone https://github.com/stoXmod/Node-video-streamer.git
+    $ cd Node-video-streamer
     $ npm install
 
 ## Running the project
