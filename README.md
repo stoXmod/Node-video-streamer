@@ -57,4 +57,4 @@ After installing node, this project will need yarn too, so just run the followin
 
     $ npm start
 
-Server will be running on [http://localhost:3000](http://localhost:8000)
+Server will be running on [http://localhost:8000](http://localhost:8000)
