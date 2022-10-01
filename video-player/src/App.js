@@ -1,11 +1,25 @@
+import React from 'react';
 import './App.css';
 
 function App() {
+  // autoplay video
+  const videoRef = React.useRef();
+
+  React.useEffect(() => {
+    videoRef.current.play();
+  }, []);
+
   return (
     <div>
-      <video id="videoPlayer" width="650" controls autoPlay>
-        <source src="/video" type="video/mp4" />
-      </video>
+      <video
+        ref={videoRef}
+        id="videoPlayer"
+        src="http://localhost:8000/video"
+        width="650"
+        controls
+        autoPlay
+        loop
+      />
     </div>
   );
 }

@@ -7,28 +7,32 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   const range = req.headers.range;
   if (!range) {
-    res.status(400).send('Requires range header');
+    return res.status(400).send('Requires range header');
   }
 
-  const videoPath = path.resolve('react.mp4');
-  const videoSize = fs.statSync(videoPath).size;
+  try {
+    const videoPath = path.resolve('react.mp4');
+    const videoSize = fs.statSync(videoPath).size;
 
-  const chunkSize = 10 ** 6;
-  const start = Number(range.replace(/\D/g, ''));
-  const end = Math.min(start + chunkSize, videoSize - 1);
+    const chunkSize = 10 ** 6;
+    const start = Number(range.replace(/\D/g, ''));
+    const end = Math.min(start + chunkSize, videoSize - 1);
 
-  const contentLength = end - start + 1;
-  const headers = {
-    'Content-Range': `bytes ${start}-${end}/${videoSize}`,
-    'Accept-Range': 'bytes',
-    'Content-Length': contentLength,
-    'Content-Type': 'video/mp4',
-  };
-  res.writeHead(206, headers);
+    const contentLength = end - start + 1;
+    const headers = {
+      'Content-Range': `bytes ${start}-${end}/${videoSize}`,
+      'Accept-Range': 'bytes',
+      'Content-Length': contentLength,
+      'Content-Type': 'video/mp4',
+    };
+    res.writeHead(206, headers);
 
-  const videoStream = fs.createReadStream(videoPath, { start, end });
+    const videoStream = fs.createReadStream(videoPath, { start, end });
 
-  videoStream.pipe(res);
+    videoStream.pipe(res);
+  } catch (err) {
+    res.status(400).send(err.message ? err.message : 'Server Error');
+  }
 });
 
 module.exports = router;
